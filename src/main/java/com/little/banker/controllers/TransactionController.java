@@ -1,5 +1,6 @@
 package com.little.banker.controllers;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import com.little.banker.domain.Account;
 import com.little.banker.domain.Transaction;
 import com.little.banker.services.AccountService;
 import com.little.banker.services.TransactionService;
-import com.little.banker.utils.DateUtils;
 
 @RestController
 @RequestMapping(value="transactions")
@@ -30,14 +30,11 @@ public class TransactionController {
 	@RequestMapping(value = "/account/{accountId}", method = RequestMethod.GET)
 	public ResponseEntity<Set<Transaction>> find (
 			@PathVariable Integer accountId,
-			@RequestParam(value="dateFrom") @DateTimeFormat(pattern = "dd/MM/yyyy") String dateFrom,
-			@RequestParam(value="dateTo") @DateTimeFormat(pattern = "dd/MM/yyyy") String dateTo) {
+			@RequestParam(value="dateFrom") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dateFrom,
+			@RequestParam(value="dateTo") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dateTo) {
 		
 		Account account = accountService.find(accountId);
-		
-		Set<Transaction> list = transactionService.findTransactionsOfAccountByDate(account, 
-				DateUtils.getDate(dateFrom), 
-				DateUtils.getDate(dateTo));
+		Set<Transaction> list = transactionService.findTransactionsOfAccountByDate(account, dateFrom, dateTo);
 		
 		return ResponseEntity.ok(list);
 	}

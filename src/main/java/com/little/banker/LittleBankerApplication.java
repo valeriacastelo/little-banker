@@ -1,7 +1,7 @@
 package com.little.banker;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -44,14 +44,14 @@ public class LittleBankerApplication implements CommandLineRunner {
 		
 		Payment t1 = new Payment();
 		t1.setId(null);
-		t1.setDate(new Date());
+		t1.setDateTime(LocalDateTime.now());
 		t1.setAccountFrom(a1);
 		t1.setAccountTo(a2);
 		t1.setAmount(50.00);
 		
 		Payment t2 = new Payment();
 		t2.setId(null);
-		t2.setDate(new Date());
+		t2.setDateTime(LocalDateTime.now());
 		t2.setAccountFrom(a2);
 		t2.setAccountTo(a1);
 		t2.setAmount(10.00);

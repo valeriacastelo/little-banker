@@ -1,6 +1,6 @@
 package com.little.banker.services;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.Assert;
@@ -17,8 +17,6 @@ import com.little.banker.domain.Account;
 import com.little.banker.domain.Payment;
 import com.little.banker.repositories.AccountRepository;
 import com.little.banker.repositories.PaymentRepository;
-import com.little.banker.services.AccountService;
-import com.little.banker.services.PaymentService;
 import com.little.banker.services.exceptions.SameAccountException;
 
 @RunWith(SpringRunner.class)
@@ -54,7 +52,7 @@ public class PaymentServiceTest {
 		Account accountFrom = new Account(1, 350.0);
 		Account accountTo = new Account(2, 50.0);
 		
-		Payment payment = new Payment(1, accountFrom, accountTo, new Date(), 50.0);
+		Payment payment = new Payment(1, accountFrom, accountTo, LocalDateTime.now(), 50.0);
 		
 	    Mockito.doReturn(Optional.of(accountFrom)).when(accountRepo).findById(1);
 	    Mockito.doReturn(Optional.of(accountTo)).when(accountRepo).findById(2);
@@ -76,7 +74,7 @@ public class PaymentServiceTest {
 		Account accountFrom = new Account(1, 350.0);
 		Account accountTo = new Account(1, 350.0);
 		
-		Payment payment = new Payment(1, accountFrom, accountTo, new Date(), 50.0);
+		Payment payment = new Payment(1, accountFrom, accountTo, LocalDateTime.now(), 50.0);
 		
 	    Mockito.doReturn(Optional.of(accountFrom)).when(accountRepo).findById(1);
 	    Mockito.doReturn(Optional.of(accountTo)).when(accountRepo).findById(2);

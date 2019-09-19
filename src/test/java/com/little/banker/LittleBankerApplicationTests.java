@@ -1,6 +1,8 @@
 package com.little.banker;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.TreeSet;
 
 import org.junit.Assert;
@@ -17,7 +19,6 @@ import com.little.banker.repositories.AccountRepository;
 import com.little.banker.services.PaymentService;
 import com.little.banker.services.TransactionService;
 import com.little.banker.services.exceptions.InsufficientFundsException;
-import com.little.banker.utils.DateUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,13 +45,13 @@ public class LittleBankerApplicationTests {
 		account2 = accountRepo.save(account2);
 		
 		//WHEN		
-		Payment payment1 = new Payment(null, account1, account2, new Date(), 50.0);
+		Payment payment1 = new Payment(null, account1, account2, LocalDateTime.now(), 50.0);
 		payment1 = paymentService.makePayment(payment1);
 		
-		Payment payment2 = new Payment(null, account2, account1, new Date(), 25.0);
+		Payment payment2 = new Payment(null, account2, account1, LocalDateTime.now(), 25.0);
 		payment2 = paymentService.makePayment(payment2);
 		
-		Payment payment3 = new Payment(null, account2, account1, new Date(), 60.0);
+		Payment payment3 = new Payment(null, account2, account1, LocalDateTime.now(), 60.0);
 		payment3 = paymentService.makePayment(payment3);
 		
 		//THEN		
@@ -72,7 +73,7 @@ public class LittleBankerApplicationTests {
 		account2 = accountRepo.save(account2);
 		
 		//WHEN
-		Payment payment1 = new Payment(null, account1, account2, new Date(), 1000.0);
+		Payment payment1 = new Payment(null, account1, account2, LocalDateTime.now(), 1000.0);
 		payment1 = paymentService.makePayment(payment1);
 		
 		//THEN
@@ -90,11 +91,11 @@ public class LittleBankerApplicationTests {
 		account2 = accountRepo.save(account2);
 		
 		//WHEN
-		Payment payment1 = new Payment(null, account1, account2, new Date(), 80.0);
+		Payment payment1 = new Payment(null, account1, account2, LocalDateTime.now(), 80.0);
 		payment1 = paymentService.makePayment(payment1);
 		
 		try {
-			Payment payment2 = new Payment(null, account2, account1, new Date(), 1000.0);
+			Payment payment2 = new Payment(null, account2, account1, LocalDateTime.now(), 1000.0);
 			payment2 = paymentService.makePayment(payment2);
 			
 		} catch(InsufficientFundsException ex) {
@@ -119,21 +120,31 @@ public class LittleBankerApplicationTests {
 		account1 = accountRepo.save(account1);
 		account2 = accountRepo.save(account2);
 		
-		String date1 = "12/01/2019 15:09:00";
-		String date2 = "15/01/2019 23:29:00";
-		String date3 = "25/03/2019 02:50:01";
+		//Date 12/01/2019 15:09:00
+		LocalDateTime date1 = LocalDateTime.of(2019, Month.JANUARY, 12, 15, 9, 1);
 		
-		String dateFrom = "12/01/2019";
-		String dateTo = "16/01/2019";
+		//Date 15/01/2019 23:29:00
+		LocalDateTime date2 = LocalDateTime.of(2019, Month.JANUARY, 15, 23, 29, 0);
+		
+		//Date 25/03/2019 02:50:01
+		LocalDateTime date3 = LocalDateTime.of(2019, Month.JANUARY, 25, 2, 50, 1);
+		
+		
+		//Date 12/01/2019
+		LocalDate dateFrom = LocalDate.of(2019, Month.JANUARY, 12);
+		
+		//Date 16/01/2019
+		LocalDate dateTo = LocalDate.of(2019, Month.JANUARY, 16);
+		
 		
 		//WHEN		
-		Payment payment1 = new Payment(null, account1, account2, DateUtils.getDateTime(date1), 50.0);
+		Payment payment1 = new Payment(null, account1, account2, date1, 50.0);
 		payment1 = paymentService.makePayment(payment1);
 		
-		Payment payment2 = new Payment(null, account2, account1, DateUtils.getDateTime(date2), 25.0);
+		Payment payment2 = new Payment(null, account2, account1, date2, 25.0);
 		payment2 = paymentService.makePayment(payment2);
 		
-		Payment payment3 = new Payment(null, account2, account1, DateUtils.getDateTime(date3), 60.0);
+		Payment payment3 = new Payment(null, account2, account1, date3, 60.0);
 		payment3 = paymentService.makePayment(payment3);
 		
 		//THEN
@@ -141,7 +152,7 @@ public class LittleBankerApplicationTests {
 		Transaction account1Transaction2 = transactionService.getTransactionOfAccountFromPayment(payment2, account1);
 		Transaction account1Transaction3 = transactionService.getTransactionOfAccountFromPayment(payment3, account1);
 
-		TreeSet<Transaction> transactionsOfAccountByDate = transactionService.findTransactionsOfAccountByDate(account1, DateUtils.getDate(dateFrom), DateUtils.getDate(dateTo));
+		TreeSet<Transaction> transactionsOfAccountByDate = transactionService.findTransactionsOfAccountByDate(account1, dateFrom, dateTo);
 		
 		Assert.assertEquals(2, transactionsOfAccountByDate.size());
 		Assert.assertEquals(true, transactionsOfAccountByDate.contains(account1Transaction1));

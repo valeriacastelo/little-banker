@@ -1,6 +1,6 @@
 package com.little.banker.services;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class PaymentService {
 	private AccountService accountService;
 	
 	
-	public List<Payment> findByAccountAndDate (Account account, Date dateFrom, Date dateTo) {
+	public List<Payment> findByAccountAndDate (Account account, LocalDate dateFrom, LocalDate dateTo) {
 		return paymentRepo.findByAccountAndDate(account, dateFrom, dateTo);
 	}
 	

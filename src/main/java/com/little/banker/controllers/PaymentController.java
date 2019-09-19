@@ -1,7 +1,7 @@
 package com.little.banker.controllers;
 
 import java.net.URI;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
@@ -27,7 +27,7 @@ public class PaymentController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert (@Valid @RequestBody Payment obj) {
 		
-		obj.setDate(new Date());
+		obj.setDateTime(LocalDateTime.now());
 		Payment inserted = paymentService.makePayment(obj);
 		
 		URI uri = ServletUriComponentsBuilder

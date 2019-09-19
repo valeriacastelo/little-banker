@@ -1,6 +1,6 @@
 package com.little.banker.repositories;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,9 +20,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 			+"join p.accountFrom ac "
 			+"join p.accountTo at "
 			+ "where (ac = :account or at = :account) "
-			+ "and (trunc(p.date) between trunc(:dateFrom) and trunc(:dateTo))"
+			+ "and (trunc(p.dateTime) between trunc(:dateFrom) and trunc(:dateTo))"
 			)
 	List<Payment> findByAccountAndDate(@Param("account") Account account, 
-			@Param("dateFrom") Date dateFrom, @Param("dateTo") Date dateTo);
+			@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
 }

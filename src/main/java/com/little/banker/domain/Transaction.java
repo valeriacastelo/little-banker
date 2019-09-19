@@ -1,7 +1,7 @@
 package com.little.banker.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.little.banker.dto.AccountDTO;
@@ -12,7 +12,7 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 	private AccountDTO account;
 	private Double amount;
 	private TransactionType type;
-	private Date date;
+	private LocalDateTime dateTime;
 	
 	@JsonIgnore
 	private Integer paymentId;
@@ -41,12 +41,12 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 		this.type = type;
 	}
 	
-	public Date getDate() {
-		return date;
+	public LocalDateTime getDateTime() {
+		return dateTime;
 	}
 	
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 	
 	public void setPaymentId(Integer paymentId) {
@@ -59,7 +59,7 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 	
 	@Override
 	public int compareTo(Transaction otherTransaction) {
-		int compareToDate = this.date == null? -1 : this.date.compareTo(otherTransaction.getDate());
+		int compareToDate = this.dateTime == null? -1 : this.dateTime.compareTo(otherTransaction.getDateTime());
 		if (compareToDate == 0) {
 			compareToDate = this.equals(otherTransaction) ? 0 : 1;
 		}
@@ -73,7 +73,7 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 		int result = 1;
 		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((dateTime == null) ? 0 : dateTime.hashCode());
 		result = prime * result + ((paymentId == null) ? 0 : paymentId.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -98,10 +98,10 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 				return false;
 		} else if (!amount.equals(other.amount))
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		if (dateTime == null) {
+			if (other.dateTime != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!dateTime.equals(other.dateTime))
 			return false;
 		if (paymentId == null) {
 			if (other.paymentId != null)
@@ -122,8 +122,8 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 		builder.append(amount);
 		builder.append(", type=");
 		builder.append(type);
-		builder.append(", date=");
-		builder.append(date);
+		builder.append(", dateTime=");
+		builder.append(dateTime);
 		builder.append(", paymentId=");
 		builder.append(paymentId);
 		builder.append("]");

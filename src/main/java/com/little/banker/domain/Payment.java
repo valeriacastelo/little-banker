@@ -1,7 +1,7 @@
 package com.little.banker.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +29,7 @@ public class Payment implements Serializable {
 	@JoinColumn(name = "account_to_id")
 	private Account accountTo;
 	
-	private Date date;
+	private LocalDateTime dateTime;
 	
 	@NotNull(message = "required")
 	private Double amount;
@@ -38,12 +38,12 @@ public class Payment implements Serializable {
 		
 	}
 	
-	public Payment(Integer id, Account accountFrom, Account accountTo, Date date, Double amount) {
+	public Payment(Integer id, Account accountFrom, Account accountTo, LocalDateTime dateTime, Double amount) {
 		super();
 		this.id = id;
 		this.accountFrom = accountFrom;
 		this.accountTo = accountTo;
-		this.date = date;
+		this.dateTime = dateTime;
 		this.amount = amount;
 	}
 	
@@ -71,12 +71,12 @@ public class Payment implements Serializable {
 		this.accountTo = accountTo;
 	}
 
-	public Date getDate() {
-		return date;
+	public LocalDateTime getDateTime() {
+		return dateTime;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	public Double getAmount() {
@@ -121,8 +121,8 @@ public class Payment implements Serializable {
 		builder.append(accountFrom == null? "" : accountFrom.getId());
 		builder.append(", accountTo=");
 		builder.append(accountTo == null? "" : accountTo.getId());
-		builder.append(", date=");
-		builder.append(date);
+		builder.append(", dateTime=");
+		builder.append(dateTime);
 		builder.append(", amount=");
 		builder.append(amount);
 		builder.append("]");

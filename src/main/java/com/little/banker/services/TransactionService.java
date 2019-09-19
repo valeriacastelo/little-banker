@@ -1,6 +1,6 @@
 package com.little.banker.services;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -20,7 +20,7 @@ public class TransactionService {
 	private PaymentService paymentService;
 	
 	
-	public TreeSet<Transaction> findTransactionsOfAccountByDate (Account account, Date dateFrom, Date dateTo) {
+	public TreeSet<Transaction> findTransactionsOfAccountByDate (Account account, LocalDate dateFrom, LocalDate dateTo) {
 		List<Payment> payments = paymentService.findByAccountAndDate(account, dateFrom, dateTo);
 		
 		TreeSet<Transaction> transactions = new TreeSet<Transaction>();
@@ -41,7 +41,7 @@ public class TransactionService {
 			transaction.setType(TransactionType.CREDIT);
 		}
 		
-		transaction.setDate(payment.getDate());
+		transaction.setDateTime(payment.getDateTime());
 		transaction.setAmount(payment.getAmount());
 		transaction.setPaymentId(payment.getId());
 		
