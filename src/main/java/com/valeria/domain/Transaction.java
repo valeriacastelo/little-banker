@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,14 +19,13 @@ public class Transaction implements Serializable {
 	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name = "from_account_id")
+	@JoinColumn(name = "account_from_id")
 	private Account accountFrom;
 	
 	@ManyToOne
-	@JoinColumn(name = "to_account_id")
+	@JoinColumn(name = "account_to_id")
 	private Account accountTo;
 	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Date date;
 	
 	private Double amount;

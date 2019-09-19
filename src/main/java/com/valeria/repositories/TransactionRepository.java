@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.valeria.domain.Account;
 import com.valeria.domain.Transaction;
 
 @Repository
@@ -16,10 +17,12 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 	
 	@Transactional(readOnly = true)	
 	@Query("select t from Transaction t "
-			+ "where (t.accountFrom.id = :accountId or t.accountTo.id = :accountId) "
+			+"join t.accountFrom ac "
+			+"join t.accountTo at "
+			+ "where (ac = :account or at = :account) "
 			+ "and (trunc(t.date) between trunc(:dateFrom) and trunc(:dateTo))"
 			)
-	List<Transaction> findByAccountAndDate(@Param("accountId") Integer accountId, 
+	List<Transaction> findByAccountAndDate(@Param("account") Account account, 
 			@Param("dateFrom") Date dateFrom, @Param("dateTo") Date dateTo);
 
 }

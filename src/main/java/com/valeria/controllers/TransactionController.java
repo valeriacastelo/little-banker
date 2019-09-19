@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.valeria.controllers.utils.ControllerUtils;
 import com.valeria.domain.Transaction;
+import com.valeria.dto.TransactionByAccountDTO;
 import com.valeria.services.TransactionService;
 
 @RestController
@@ -32,12 +33,12 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value = "/account/{accountId}", method = RequestMethod.GET)
-	public ResponseEntity<List<Transaction>> find (
+	public ResponseEntity<List<TransactionByAccountDTO>> find (
 							@PathVariable Integer accountId,
 							@RequestParam(value="dateFrom", defaultValue="") String dateFrom,
 							@RequestParam(value="dateTo", defaultValue="") String dateTo) {
 		
-		List<Transaction> list = transactionService.findByAccountAndDate(accountId, 
+		List<TransactionByAccountDTO> list = transactionService.findByAccountAndDate(accountId, 
 				ControllerUtils.getDateFromParam(dateFrom), 
 				ControllerUtils.getDateFromParam(dateTo));
 		
