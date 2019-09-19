@@ -3,6 +3,7 @@ package com.little.banker.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.little.banker.dto.AccountDTO;
 
@@ -12,6 +13,8 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 	private AccountDTO account;
 	private Double amount;
 	private TransactionType type;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dateTime;
 	
 	@JsonIgnore
