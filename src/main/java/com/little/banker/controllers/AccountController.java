@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,12 @@ public class AccountController {
 	
 	@Autowired
 	private AccountService accountService;
+	
+	@RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
+	public ResponseEntity<Account> find (@PathVariable Integer accountId) {
+		Account obj = accountService.find(accountId);
+		return ResponseEntity.ok(obj);
+	}
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
