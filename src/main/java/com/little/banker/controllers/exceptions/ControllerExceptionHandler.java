@@ -16,7 +16,7 @@ import com.little.banker.services.exceptions.ObjectNotFoundException;
 import com.little.banker.services.exceptions.SameAccountException;
 
 @ControllerAdvice
-public class ResourceExceptionHandler {
+public class ControllerExceptionHandler {
 	
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException exception, HttpServletRequest request) {

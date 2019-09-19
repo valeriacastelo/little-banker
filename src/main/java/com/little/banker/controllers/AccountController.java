@@ -23,6 +23,12 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
+	/**
+	 * GET accounts/{accountId} : Show balance per account
+	 * 
+	 * @param accountId
+	 * @return
+	 */
 	@RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
 	public ResponseEntity<Account> find (@PathVariable Integer accountId) {
 		Account obj = accountService.find(accountId);
@@ -30,10 +36,15 @@ public class AccountController {
 	}
 	
 	
+	/**
+	 * POST accounts/ : Create account with an initial balance
+	 * @param account
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody Account obj) {
+	public ResponseEntity<Void> insert (@Valid @RequestBody Account account) {
 		
-		Account inserted = accountService.insert(obj);
+		Account inserted = accountService.insert(account);
 		
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()

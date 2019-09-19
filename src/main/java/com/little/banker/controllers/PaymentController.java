@@ -24,11 +24,17 @@ public class PaymentController {
 	private PaymentService paymentService;
 	
 	
+	/**
+	 * POST payments/ : Make payment from one account to another
+	 * 
+	 * @param payment
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody Payment obj) {
+	public ResponseEntity<Void> insert (@Valid @RequestBody Payment payment) {
 		
-		obj.setDateTime(LocalDateTime.now());
-		Payment inserted = paymentService.makePayment(obj);
+		payment.setDateTime(LocalDateTime.now());
+		Payment inserted = paymentService.makePayment(payment);
 		
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()

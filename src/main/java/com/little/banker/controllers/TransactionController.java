@@ -27,6 +27,15 @@ public class TransactionController {
 	@Autowired
 	private AccountService accountService;	
 	
+	/**
+	 * GET transactions/account/{accountId} : 
+	 * Show all transactions in one account with filtering dateFrom and dateTo
+	 * 
+	 * @param accountId
+	 * @param dateFrom
+	 * @param dateTo
+	 * @return
+	 */
 	@RequestMapping(value = "/account/{accountId}", method = RequestMethod.GET)
 	public ResponseEntity<Set<Transaction>> find (
 			@PathVariable Integer accountId,

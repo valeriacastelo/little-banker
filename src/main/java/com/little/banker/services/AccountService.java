@@ -16,6 +16,7 @@ public class AccountService {
 	@Autowired
 	private AccountRepository accountRepo;
 	
+	
 	public Account find (Integer id) {
 		Optional<Account> op = accountRepo.findById(id);
 		return op.orElseThrow(() -> new ObjectNotFoundException("Object not found! "
@@ -37,6 +38,7 @@ public class AccountService {
 	public Account debit(Account obj, Double amount) {
 		Account account = find(obj.getId());
 		
+		//Check if the account has enough balance
 		if (account.getBalance() < amount) {
 			throw new InsufficientFundsException("Insufficient Funds for the account id [" + account.getId() + "]");
 		}

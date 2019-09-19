@@ -21,8 +21,11 @@ public class TransactionService {
 	
 	
 	public TreeSet<Transaction> findTransactionsOfAccountByDate (Account account, LocalDate dateFrom, LocalDate dateTo) {
+		
+		//Get the payments of the account by the date
 		List<Payment> payments = paymentService.findByAccountAndDate(account, dateFrom, dateTo);
 		
+		//Build the sorted Set with information related to the transaction of the account
 		TreeSet<Transaction> transactions = new TreeSet<Transaction>();
 		for (Payment p : payments) {
 			transactions.add(getTransactionOfAccountFromPayment(p, account));
@@ -31,8 +34,13 @@ public class TransactionService {
 		return transactions;
 	}
 	
+	
 	public Transaction getTransactionOfAccountFromPayment (Payment payment, Account account) {
+		
 		Transaction transaction = new Transaction();
+		
+		//Check if the account was the accountFrom in the Payment. If it was it the operation was a DEBIT
+		//If the account was the accountFrom in the Payment, that means the transaction it was a CREDIT to the account
 		if (payment.getAccountFrom().equals(account)) {
 			transaction.setAccount(new AccountDTO(payment.getAccountTo()));
 			transaction.setType(TransactionType.DEBIT);

@@ -30,10 +30,12 @@ public class PaymentService {
 	public Payment makePayment (Payment payment) {
 		payment.setId(null);
 		
+		//check if the the account are the same
 		if (payment.getAccountFrom().equals(payment.getAccountTo())) {
 			throw new SameAccountException("Account from and account to cannot be the same");
 		}
 		
+		//performs the operations related to the payment
 		accountService.debit(payment.getAccountFrom(), payment.getAmount());
 		accountService.credit(payment.getAccountTo(), payment.getAmount());
 		
