@@ -26,7 +26,7 @@ public class PaymentService {
 	public Payment find (Integer id) {
 		Optional<Payment> op = paymentRepo.findById(id);
 		return op.orElseThrow(() -> new ObjectNotFoundException("Object not found! "
-				+ "Id:[" + id + "] Type:[" + Payment.class.getName() + "]"));
+				+ "Id:[" + id + "] Type:[" + Payment.class.getSimpleName() + "]"));
 	}
 	
 	public List<Payment> findByAccountAndDate (Account account, Date dateFrom, Date dateTo) {

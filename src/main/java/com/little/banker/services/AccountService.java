@@ -19,7 +19,7 @@ public class AccountService {
 	public Account find (Integer id) {
 		Optional<Account> op = accountRepo.findById(id);
 		return op.orElseThrow(() -> new ObjectNotFoundException("Object not found! "
-				+ "Id:[" + id + "] Type:[" + Account.class.getName() + "]"));
+				+ "Id:[" + id + "] Type:[" + Account.class.getSimpleName() + "]"));
 	}
 	
 	public Account insert(Account obj) {
