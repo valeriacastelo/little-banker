@@ -1,6 +1,7 @@
 package com.valeria.controllers;
 
 import java.net.URI;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,8 @@ public class PaymentController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert (@RequestBody Payment obj) {
 		
-		Payment inserted = paymentService.insert(obj);
+		obj.setDate(new Date());
+		Payment inserted = paymentService.makePayment(obj);
 		
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()

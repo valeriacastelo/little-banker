@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.valeria.controllers.utils.ControllerUtils;
 import com.valeria.domain.Account;
 import com.valeria.domain.Transaction;
 import com.valeria.services.AccountService;
 import com.valeria.services.TransactionService;
+import com.valeria.utils.DateUtils;
 
 @RestController
 @RequestMapping(value="transactions")
@@ -35,8 +35,8 @@ public class TransactionController {
 		Account account = accountService.find(accountId);
 		
 		Set<Transaction> list = transactionService.findTransactionsOfAccountByDate(account, 
-				ControllerUtils.getDateFromParam(dateFrom), 
-				ControllerUtils.getDateFromParam(dateTo));
+				DateUtils.getDate(dateFrom), 
+				DateUtils.getDate(dateTo));
 		
 		return ResponseEntity.ok(list);
 	}

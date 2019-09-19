@@ -42,6 +42,7 @@ public class TransactionService {
 		
 		transaction.setDate(payment.getDate());
 		transaction.setAmount(payment.getAmount());
+		transaction.setPaymentId(payment.getId());
 		
 		return transaction;
 	}

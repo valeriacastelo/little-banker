@@ -34,9 +34,8 @@ public class PaymentService {
 	}
 	
 	@Transactional
-	public Payment insert (Payment payment) {
+	public Payment makePayment (Payment payment) {
 		payment.setId(null);
-		payment.setDate(new Date());
 		
 		if (payment.getAccountFrom().equals(payment.getAccountTo())) {
 			throw new SameAccountException("Account from and account to cannot be the same");

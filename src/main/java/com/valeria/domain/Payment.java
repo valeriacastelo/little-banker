@@ -29,7 +29,20 @@ public class Payment implements Serializable {
 	private Date date;
 	
 	private Double amount;
-
+	
+	public Payment() {
+		
+	}
+	
+	public Payment(Integer id, Account accountFrom, Account accountTo, Date date, Double amount) {
+		super();
+		this.id = id;
+		this.accountFrom = accountFrom;
+		this.accountTo = accountTo;
+		this.date = date;
+		this.amount = amount;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -94,5 +107,21 @@ public class Payment implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Payment [id=");
+		builder.append(id);
+		builder.append(", accountFrom=");
+		builder.append(accountFrom == null? "" : accountFrom.getId());
+		builder.append(", accountTo=");
+		builder.append(accountTo == null? "" : accountTo.getId());
+		builder.append(", date=");
+		builder.append(date);
+		builder.append(", amount=");
+		builder.append(amount);
+		builder.append("]");
+		return builder.toString();
+	}	
 }

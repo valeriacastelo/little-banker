@@ -29,6 +29,16 @@ public class Account implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "accountTo")
 	private List<Payment> receivedPayments = new ArrayList<Payment>();
+	
+	public Account() {
+		
+	}
+
+	public Account(Integer id, Double balance) {
+		super();
+		this.id = id;
+		this.balance = balance;
+	}
 
 	public Integer getId() {
 		return id;
@@ -86,5 +96,15 @@ public class Account implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Account [id=");
+		builder.append(id);
+		builder.append(", balance=");
+		builder.append(balance);
+		builder.append("]");
+		return builder.toString();
+	}	
 }
