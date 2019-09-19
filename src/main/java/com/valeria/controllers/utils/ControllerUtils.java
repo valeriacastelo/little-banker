@@ -7,7 +7,7 @@ import java.util.Date;
 public class ControllerUtils {
 		
 	public static Date getDateFromParam(String s) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
 		
 		if (s.isEmpty()) {

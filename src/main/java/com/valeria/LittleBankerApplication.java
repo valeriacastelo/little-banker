@@ -36,7 +36,11 @@ public class LittleBankerApplication implements CommandLineRunner {
 		
 		Account a2 = new Account();
 		a2.setId(null);
-		a2.setBalance(200.00);		
+		a2.setBalance(200.00);
+		
+		Account a3 = new Account();
+		a3.setId(null);
+		a3.setBalance(500.00);	
 		
 		Transaction t1 = new Transaction();
 		t1.setId(null);
@@ -45,12 +49,22 @@ public class LittleBankerApplication implements CommandLineRunner {
 		t1.setAccountTo(a2);
 		t1.setAmount(50.00);
 		
-		a1.getDebitTransactions().add(t1);
-		a2.getCreditTransactions().add(t1);
+		Transaction t2 = new Transaction();
+		t2.setId(null);
+		t2.setDate(new Date());
+		t2.setAccountFrom(a2);
+		t2.setAccountTo(a1);
+		t2.setAmount(10.00);
 		
-		accountRepo.saveAll(Arrays.asList(a1,a2));
+		a1.getDebitTransactions().addAll(Arrays.asList(t1));
+		a1.getCreditTransactions().addAll(Arrays.asList(t2));
 		
-		transactionRepo.saveAll(Arrays.asList(t1));
+		a2.getDebitTransactions().addAll(Arrays.asList(t2));
+		a2.getCreditTransactions().addAll(Arrays.asList(t1));
+		
+		accountRepo.saveAll(Arrays.asList(a1,a2,a3));
+		
+		transactionRepo.saveAll(Arrays.asList(t1, t2));
 		
 	}
 

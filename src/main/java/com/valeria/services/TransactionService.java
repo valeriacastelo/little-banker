@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.valeria.domain.Account;
 import com.valeria.domain.Transaction;
 import com.valeria.repositories.TransactionRepository;
 
@@ -28,8 +27,7 @@ public class TransactionService {
 	}
 	
 	public List<Transaction> findByAccountAndDate (Integer accountId, Date dateFrom, Date dateTo) {
-		Account account = accountService.find(accountId);
-		return transactionRepo.findByAccountFromOrAccountToAndDateBetween(account, account, dateFrom, dateTo);
+		return transactionRepo.findByAccountAndDate(accountId, dateFrom, dateTo);
 	}
 	
 	
