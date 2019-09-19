@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.valeria.domain.Transaction;
 import com.valeria.repositories.TransactionRepository;
+import com.valeria.services.exceptions.ObjectNotFoundException;
+import com.valeria.services.exceptions.SameAccountException;
 
 @Service
 public class TransactionService {
@@ -22,7 +24,7 @@ public class TransactionService {
 	
 	public Transaction find (Integer id) {
 		Optional<Transaction> op = transactionRepo.findById(id);
-		return op.orElseThrow(() -> new IllegalArgumentException("Object not found! "
+		return op.orElseThrow(() -> new ObjectNotFoundException("Object not found! "
 				+ "Id:[" + id + "] Type:[" + Transaction.class.getName() + "]"));
 	}
 	
@@ -35,6 +37,13 @@ public class TransactionService {
 	public Transaction insert (Transaction transaction) {
 		transaction.setId(null);
 		transaction.setDate(new Date());
+		
+		if (transaction.getAccountFrom().getId().equals(transaction.getAccountTo().getId())) {
+			throw new SameAccountException("Account from and account to cannot be the same");
+		}
+		
+		transaction.setAccountFrom(accountService.find(transaction.getAccountFrom().getId()));
+		transaction.setAccountTo(accountService.find(transaction.getAccountTo().getId()));
 		
 		accountService.debit(transaction.getAccountFrom(), transaction.getAmount());
 		accountService.credit(transaction.getAccountTo(), transaction.getAmount());

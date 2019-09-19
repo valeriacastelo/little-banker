@@ -3,8 +3,6 @@ package com.valeria.controllers;
 import java.net.URI;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +45,7 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody Transaction obj) {
+	public ResponseEntity<Void> insert (@RequestBody Transaction obj) {
 		
 		Transaction inserted = transactionService.insert(obj);
 		

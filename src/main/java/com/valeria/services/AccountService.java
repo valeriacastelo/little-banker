@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.valeria.domain.Account;
 import com.valeria.repositories.AccountRepository;
 import com.valeria.services.exceptions.InsufficientFundsException;
+import com.valeria.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class AccountService {
@@ -17,7 +18,7 @@ public class AccountService {
 	
 	public Account find (Integer id) {
 		Optional<Account> op = accountRepo.findById(id);
-		return op.orElseThrow(() -> new IllegalArgumentException("Object not found! "
+		return op.orElseThrow(() -> new ObjectNotFoundException("Object not found! "
 				+ "Id:[" + id + "] Type:[" + Account.class.getName() + "]"));
 	}
 	
