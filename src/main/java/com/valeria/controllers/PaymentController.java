@@ -11,27 +11,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.valeria.domain.Account;
-import com.valeria.services.AccountService;
+import com.valeria.domain.Payment;
+import com.valeria.services.PaymentService;
 
 @RestController
-@RequestMapping(value="accounts")
-public class AccountController {
+@RequestMapping(value="payments")
+public class PaymentController {
 	
 	@Autowired
-	private AccountService accountService;
+	private PaymentService paymentService;
 	
-	@RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
-	public ResponseEntity<Account> find (@PathVariable Integer accountId) {
+	@RequestMapping(value = "/{paymentId}", method = RequestMethod.GET)
+	public ResponseEntity<Payment> find (@PathVariable Integer paymentId) {
 		
-		Account obj = accountService.find(accountId);
+		Payment obj = paymentService.find(paymentId);
 		return ResponseEntity.ok(obj);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@RequestBody Account obj) {
+	public ResponseEntity<Void> insert (@RequestBody Payment obj) {
 		
-		Account inserted = accountService.insert(obj);
+		Payment inserted = paymentService.insert(obj);
 		
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
@@ -41,5 +41,4 @@ public class AccountController {
 		
 		return ResponseEntity.created(uri).build();
 	}
-
 }

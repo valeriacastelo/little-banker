@@ -10,19 +10,19 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.valeria.domain.Account;
-import com.valeria.domain.Transaction;
+import com.valeria.domain.Payment;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
+public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 	
 	@Transactional(readOnly = true)	
-	@Query("select t from Transaction t "
-			+"join t.accountFrom ac "
-			+"join t.accountTo at "
+	@Query("select p from Payment p "
+			+"join p.accountFrom ac "
+			+"join p.accountTo at "
 			+ "where (ac = :account or at = :account) "
-			+ "and (trunc(t.date) between trunc(:dateFrom) and trunc(:dateTo))"
+			+ "and (trunc(p.date) between trunc(:dateFrom) and trunc(:dateTo))"
 			)
-	List<Transaction> findByAccountAndDate(@Param("account") Account account, 
+	List<Payment> findByAccountAndDate(@Param("account") Account account, 
 			@Param("dateFrom") Date dateFrom, @Param("dateTo") Date dateTo);
 
 }

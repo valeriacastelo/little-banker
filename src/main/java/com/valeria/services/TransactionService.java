@@ -3,65 +3,46 @@ package com.valeria.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.valeria.domain.Account;
+import com.valeria.domain.Payment;
 import com.valeria.domain.Transaction;
-import com.valeria.dto.TransactionByAccountDTO;
-import com.valeria.repositories.TransactionRepository;
-import com.valeria.services.exceptions.ObjectNotFoundException;
-import com.valeria.services.exceptions.SameAccountException;
+import com.valeria.domain.TransactionType;
+import com.valeria.dto.AccountDTO;
 
 @Service
 public class TransactionService {
 	
 	@Autowired
-	private TransactionRepository transactionRepo;
+	private PaymentService paymentService;
 	
-	@Autowired
-	private AccountService accountService;
-	
-	public Transaction find (Integer id) {
-		Optional<Transaction> op = transactionRepo.findById(id);
-		return op.orElseThrow(() -> new ObjectNotFoundException("Object not found! "
-				+ "Id:[" + id + "] Type:[" + Transaction.class.getName() + "]"));
-	}
-	
-	public List<TransactionByAccountDTO> findByAccountAndDate (Integer accountId, Date dateFrom, Date dateTo) {
-		Account account = accountService.find(accountId);
-		List<Transaction> list = transactionRepo.findByAccountAndDate(account, dateFrom, dateTo);
+	public List<Transaction> findTransactionsOfAccountByDate (Account account, Date dateFrom, Date dateTo) {
+		List<Payment> payments = paymentService.findByAccountAndDate(account, dateFrom, dateTo);
 		
-		return fromTransactionList(list, account);
-	}
-	
-	
-	@Transactional
-	public Transaction insert (Transaction transaction) {
-		transaction.setId(null);
-		transaction.setDate(new Date());
-		
-		if (transaction.getAccountFrom().getId().equals(transaction.getAccountTo().getId())) {
-			throw new SameAccountException("Account from and account to cannot be the same");
+		List<Transaction> transactions = new ArrayList<Transaction>();
+		for (Payment p : payments) {
+			transactions.add(getTransactionOfAccountFromPayment(p, account));
 		}
 		
-		accountService.debit(transaction.getAccountFrom(), transaction.getAmount());
-		accountService.credit(transaction.getAccountTo(), transaction.getAmount());
-		
-		return transactionRepo.save(transaction);
+		return transactions;
 	}
 	
-	public List<TransactionByAccountDTO> fromTransactionList (List<Transaction> transactions, Account account) {
-		
-		List<TransactionByAccountDTO> dtos = new ArrayList<TransactionByAccountDTO>();
-		for (Transaction t : transactions) {
-			dtos.add(new TransactionByAccountDTO(t, account));
+	public Transaction getTransactionOfAccountFromPayment (Payment payment, Account account) {
+		Transaction transaction = new Transaction();
+		if (payment.getAccountFrom().equals(account)) {
+			transaction.setAccount(new AccountDTO(payment.getAccountTo()));
+			transaction.setType(TransactionType.DEBIT);
+		} else {
+			transaction.setAccount(new AccountDTO(payment.getAccountFrom()));
+			transaction.setType(TransactionType.CREDIT);
 		}
 		
-		return dtos;
+		transaction.setDate(payment.getDate());
+		transaction.setAmount(payment.getAmount());
+		
+		return transaction;
 	}
-
 }

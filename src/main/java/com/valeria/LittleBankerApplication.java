@@ -9,9 +9,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.valeria.domain.Account;
-import com.valeria.domain.Transaction;
+import com.valeria.domain.Payment;
 import com.valeria.repositories.AccountRepository;
-import com.valeria.repositories.TransactionRepository;
+import com.valeria.repositories.PaymentRepository;
 
 @SpringBootApplication
 public class LittleBankerApplication implements CommandLineRunner {
@@ -20,7 +20,7 @@ public class LittleBankerApplication implements CommandLineRunner {
 	private AccountRepository accountRepo;
 	
 	@Autowired
-	private TransactionRepository transactionRepo;
+	private PaymentRepository transactionRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LittleBankerApplication.class, args);
@@ -42,25 +42,25 @@ public class LittleBankerApplication implements CommandLineRunner {
 		a3.setId(null);
 		a3.setBalance(500.00);	
 		
-		Transaction t1 = new Transaction();
+		Payment t1 = new Payment();
 		t1.setId(null);
 		t1.setDate(new Date());
 		t1.setAccountFrom(a1);
 		t1.setAccountTo(a2);
 		t1.setAmount(50.00);
 		
-		Transaction t2 = new Transaction();
+		Payment t2 = new Payment();
 		t2.setId(null);
 		t2.setDate(new Date());
 		t2.setAccountFrom(a2);
 		t2.setAccountTo(a1);
 		t2.setAmount(10.00);
 		
-		a1.getDebitTransactions().addAll(Arrays.asList(t1));
-		a1.getCreditTransactions().addAll(Arrays.asList(t2));
+		a1.getMadePayments().addAll(Arrays.asList(t1));
+		a1.getReceivedPayments().addAll(Arrays.asList(t2));
 		
-		a2.getDebitTransactions().addAll(Arrays.asList(t2));
-		a2.getCreditTransactions().addAll(Arrays.asList(t1));
+		a2.getMadePayments().addAll(Arrays.asList(t2));
+		a2.getReceivedPayments().addAll(Arrays.asList(t1));
 		
 		accountRepo.saveAll(Arrays.asList(a1,a2,a3));
 		

@@ -1,34 +1,34 @@
 package com.valeria.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Account implements Serializable {
+public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private Double balance;
+	@ManyToOne
+	@JoinColumn(name = "account_from_id")
+	private Account accountFrom;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "accountFrom")
-	private List<Payment> madePayments = new ArrayList<Payment>();
+	@ManyToOne
+	@JoinColumn(name = "account_to_id")
+	private Account accountTo;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "accountTo")
-	private List<Payment> receivedPayments = new ArrayList<Payment>();
+	private Date date;
+	
+	private Double amount;
 
 	public Integer getId() {
 		return id;
@@ -38,28 +38,36 @@ public class Account implements Serializable {
 		this.id = id;
 	}
 
-	public Double getBalance() {
-		return balance;
+	public Account getAccountFrom() {
+		return accountFrom;
 	}
 
-	public void setBalance(Double balance) {
-		this.balance = balance;
+	public void setAccountFrom(Account accountFrom) {
+		this.accountFrom = accountFrom;
 	}
 
-	public List<Payment> getMadePayments() {
-		return madePayments;
+	public Account getAccountTo() {
+		return accountTo;
 	}
 
-	public void setMadePayments(List<Payment> madePayments) {
-		this.madePayments = madePayments;
+	public void setAccountTo(Account accountTo) {
+		this.accountTo = accountTo;
 	}
 
-	public List<Payment> getReceivedPayments() {
-		return receivedPayments;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setReceivedPayments(List<Payment> receivedPayments) {
-		this.receivedPayments = receivedPayments;
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 	@Override
@@ -78,7 +86,7 @@ public class Account implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Account other = (Account) obj;
+		Payment other = (Payment) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
