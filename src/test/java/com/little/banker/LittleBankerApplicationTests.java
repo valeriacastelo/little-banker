@@ -129,7 +129,6 @@ public class LittleBankerApplicationTests {
 		//Date 25/03/2019 02:50:01
 		LocalDateTime date3 = LocalDateTime.of(2019, Month.JANUARY, 25, 2, 50, 1);
 		
-		
 		//Date 12/01/2019
 		LocalDate dateFrom = LocalDate.of(2019, Month.JANUARY, 12);
 		

@@ -1,6 +1,7 @@
 package com.little.banker;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,32 +30,15 @@ public class LittleBankerApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		LocalDateTime date1 = LocalDateTime.of(2019, Month.SEPTEMBER, 19, 23, 29, 0);
+		LocalDateTime date2 = LocalDateTime.of(2019, Month.SEPTEMBER, 18, 2, 50, 1);
 
-		Account a1 = new Account();
-		a1.setId(null);
-		a1.setBalance(100.00);
+		Account a1 = new Account(null, 100.0);		
+		Account a2 = new Account(null, 200.0);
+		Account a3 = new Account(null, 500.0);
 		
-		Account a2 = new Account();
-		a2.setId(null);
-		a2.setBalance(200.00);
-		
-		Account a3 = new Account();
-		a3.setId(null);
-		a3.setBalance(500.00);	
-		
-		Payment t1 = new Payment();
-		t1.setId(null);
-		t1.setDateTime(LocalDateTime.now());
-		t1.setAccountFrom(a1);
-		t1.setAccountTo(a2);
-		t1.setAmount(50.00);
-		
-		Payment t2 = new Payment();
-		t2.setId(null);
-		t2.setDateTime(LocalDateTime.now());
-		t2.setAccountFrom(a2);
-		t2.setAccountTo(a1);
-		t2.setAmount(10.00);
+		Payment t1 = new Payment(null, a1, a2, date2, 50.0);
+		Payment t2 = new Payment(null, a2, a1, date1, 10.0);
 		
 		a1.getMadePayments().addAll(Arrays.asList(t1));
 		a1.getReceivedPayments().addAll(Arrays.asList(t2));
@@ -63,7 +47,6 @@ public class LittleBankerApplication implements CommandLineRunner {
 		a2.getReceivedPayments().addAll(Arrays.asList(t1));
 		
 		accountRepo.saveAll(Arrays.asList(a1,a2,a3));
-		
 		transactionRepo.saveAll(Arrays.asList(t1, t2));
 		
 	}
