@@ -19,6 +19,7 @@ public class TransactionService {
 	@Autowired
 	private PaymentService paymentService;
 	
+	
 	public TreeSet<Transaction> findTransactionsOfAccountByDate (Account account, Date dateFrom, Date dateTo) {
 		List<Payment> payments = paymentService.findByAccountAndDate(account, dateFrom, dateTo);
 		

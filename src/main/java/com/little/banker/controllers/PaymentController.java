@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,12 +21,6 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 	
-	@RequestMapping(value = "/{paymentId}", method = RequestMethod.GET)
-	public ResponseEntity<Payment> find (@PathVariable Integer paymentId) {
-		
-		Payment obj = paymentService.find(paymentId);
-		return ResponseEntity.ok(obj);
-	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert (@RequestBody Payment obj) {
