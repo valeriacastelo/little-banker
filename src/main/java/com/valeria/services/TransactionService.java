@@ -1,8 +1,8 @@
 package com.valeria.services;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,10 @@ public class TransactionService {
 	@Autowired
 	private PaymentService paymentService;
 	
-	public List<Transaction> findTransactionsOfAccountByDate (Account account, Date dateFrom, Date dateTo) {
+	public TreeSet<Transaction> findTransactionsOfAccountByDate (Account account, Date dateFrom, Date dateTo) {
 		List<Payment> payments = paymentService.findByAccountAndDate(account, dateFrom, dateTo);
 		
-		List<Transaction> transactions = new ArrayList<Transaction>();
+		TreeSet<Transaction> transactions = new TreeSet<Transaction>();
 		for (Payment p : payments) {
 			transactions.add(getTransactionOfAccountFromPayment(p, account));
 		}

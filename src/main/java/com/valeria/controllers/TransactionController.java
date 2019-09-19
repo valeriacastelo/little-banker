@@ -1,6 +1,6 @@
 package com.valeria.controllers;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +27,14 @@ public class TransactionController {
 	private AccountService accountService;	
 	
 	@RequestMapping(value = "/account/{accountId}", method = RequestMethod.GET)
-	public ResponseEntity<List<Transaction>> find (
+	public ResponseEntity<Set<Transaction>> find (
 							@PathVariable Integer accountId,
 							@RequestParam(value="dateFrom", defaultValue="") String dateFrom,
 							@RequestParam(value="dateTo", defaultValue="") String dateTo) {
 		
 		Account account = accountService.find(accountId);
 		
-		List<Transaction> list = transactionService.findTransactionsOfAccountByDate(account, 
+		Set<Transaction> list = transactionService.findTransactionsOfAccountByDate(account, 
 				ControllerUtils.getDateFromParam(dateFrom), 
 				ControllerUtils.getDateFromParam(dateTo));
 		
