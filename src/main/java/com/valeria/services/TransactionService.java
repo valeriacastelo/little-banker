@@ -42,9 +42,6 @@ public class TransactionService {
 			throw new SameAccountException("Account from and account to cannot be the same");
 		}
 		
-		transaction.setAccountFrom(accountService.find(transaction.getAccountFrom().getId()));
-		transaction.setAccountTo(accountService.find(transaction.getAccountTo().getId()));
-		
 		accountService.debit(transaction.getAccountFrom(), transaction.getAmount());
 		accountService.credit(transaction.getAccountTo(), transaction.getAmount());
 		
