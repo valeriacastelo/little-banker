@@ -8,7 +8,7 @@
 		<version>2.1.8.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.valeria</groupId>
+	<groupId>com.little.banker</groupId>
 	<artifactId>little-banker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>little-banker</name>
