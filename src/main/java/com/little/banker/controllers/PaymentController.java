@@ -3,6 +3,8 @@ package com.little.banker.controllers;
 import java.net.URI;
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +25,7 @@ public class PaymentController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@RequestBody Payment obj) {
+	public ResponseEntity<Void> insert (@Valid @RequestBody Payment obj) {
 		
 		obj.setDate(new Date());
 		Payment inserted = paymentService.makePayment(obj);

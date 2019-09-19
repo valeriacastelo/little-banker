@@ -2,6 +2,8 @@ package com.little.banker.controllers;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +24,7 @@ public class AccountController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@RequestBody Account obj) {
+	public ResponseEntity<Void> insert (@Valid @RequestBody Account obj) {
 		
 		Account inserted = accountService.insert(obj);
 		

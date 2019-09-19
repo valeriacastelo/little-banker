@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Payment implements Serializable {
@@ -18,16 +19,19 @@ public class Payment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotNull(message = "required")
 	@ManyToOne
 	@JoinColumn(name = "account_from_id")
 	private Account accountFrom;
 	
+	@NotNull(message = "required")
 	@ManyToOne
 	@JoinColumn(name = "account_to_id")
 	private Account accountTo;
 	
 	private Date date;
 	
+	@NotNull(message = "required")
 	private Double amount;
 	
 	public Payment() {

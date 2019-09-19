@@ -23,12 +23,7 @@ public class AccountService {
 	}
 	
 	public Account insert(Account obj) {
-		obj.setId(null);
-		
-		if (obj.getBalance() == null) {
-			obj.setBalance(0.0);
-		}
-		
+		obj.setId(null);		
 		return accountRepo.save(obj);
 	}
 	
