@@ -1,5 +1,7 @@
 package com.valeria.controllers.exceptions;
 
+import java.time.DateTimeException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,7 @@ import com.valeria.services.exceptions.ObjectNotFoundException;
 import com.valeria.services.exceptions.SameAccountException;
 
 @ControllerAdvice
-public class ResourceExeceptionHandler {
+public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException exception, HttpServletRequest request) {
@@ -30,6 +32,13 @@ public class ResourceExeceptionHandler {
 	
 	@ExceptionHandler(SameAccountException.class)
 	public ResponseEntity<StandardError> insufficientFunds(SameAccountException exception, HttpServletRequest request) {
+		
+		StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(DateTimeException.class)
+	public ResponseEntity<StandardError> dateParamFormat(DateTimeException exception, HttpServletRequest request) {
 		
 		StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);

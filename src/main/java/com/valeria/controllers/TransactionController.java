@@ -3,6 +3,7 @@ package com.valeria.controllers;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +29,9 @@ public class TransactionController {
 	
 	@RequestMapping(value = "/account/{accountId}", method = RequestMethod.GET)
 	public ResponseEntity<Set<Transaction>> find (
-							@PathVariable Integer accountId,
-							@RequestParam(value="dateFrom", defaultValue="") String dateFrom,
-							@RequestParam(value="dateTo", defaultValue="") String dateTo) {
+			@PathVariable Integer accountId,
+			@RequestParam(value="dateFrom") @DateTimeFormat(pattern = "dd/MM/yyyy") String dateFrom,
+			@RequestParam(value="dateTo") @DateTimeFormat(pattern = "dd/MM/yyyy") String dateTo) {
 		
 		Account account = accountService.find(accountId);
 		
