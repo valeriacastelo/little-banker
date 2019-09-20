@@ -3,7 +3,7 @@ package com.little.banker;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.TreeSet;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -151,7 +151,7 @@ public class LittleBankerApplicationTests {
 		Transaction account1Transaction2 = transactionService.getTransactionOfAccountFromPayment(payment2, account1);
 		Transaction account1Transaction3 = transactionService.getTransactionOfAccountFromPayment(payment3, account1);
 
-		TreeSet<Transaction> transactionsOfAccountByDate = transactionService.findTransactionsOfAccountByDate(account1, dateFrom, dateTo);
+		List<Transaction> transactionsOfAccountByDate = transactionService.findTransactionsOfAccountByDate(account1, dateFrom, dateTo);
 		
 		Assert.assertEquals(2, transactionsOfAccountByDate.size());
 		Assert.assertEquals(true, transactionsOfAccountByDate.contains(account1Transaction1));
