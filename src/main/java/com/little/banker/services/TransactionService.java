@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.TreeSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,14 @@ import com.little.banker.dto.AccountDTO;
 
 @Service
 public class TransactionService {
+	private static final Logger LOG = LoggerFactory.getLogger(TransactionService.class);
 	
 	@Autowired
 	private PaymentService paymentService;
 	
 	
 	public TreeSet<Transaction> findTransactionsOfAccountByDate (Account account, LocalDate dateFrom, LocalDate dateTo) {
+		LOG.debug("Getting the transactions for the account id [" + account.getId() + "] DateFrom [" + dateFrom + "] DateTo [" + dateTo + "]");
 		
 		//Get the payments of the account by the date
 		List<Payment> payments = paymentService.findByAccountAndDate(account, dateFrom, dateTo);
@@ -31,11 +35,14 @@ public class TransactionService {
 			transactions.add(getTransactionOfAccountFromPayment(p, account));
 		}
 		
+		LOG.debug("Transactions founded: " + transactions);
+		
 		return transactions;
 	}
 	
 	
 	public Transaction getTransactionOfAccountFromPayment (Payment payment, Account account) {
+		LOG.debug("Get transaction for the account id [" + account.getId() + "]");
 		
 		Transaction transaction = new Transaction();
 		
