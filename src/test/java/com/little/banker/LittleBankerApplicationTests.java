@@ -120,19 +120,19 @@ public class LittleBankerApplicationTests {
 		account1 = accountRepo.save(account1);
 		account2 = accountRepo.save(account2);
 		
-		//Date 12/01/2019 15:09:00
+		//Date 12-01-2019 15:09:00
 		LocalDateTime date1 = LocalDateTime.of(2019, Month.JANUARY, 12, 15, 9, 1);
 		
-		//Date 15/01/2019 23:29:00
+		//Date 15-01-2019 23:29:00
 		LocalDateTime date2 = LocalDateTime.of(2019, Month.JANUARY, 15, 23, 29, 0);
 		
-		//Date 25/03/2019 02:50:01
+		//Date 25-03-2019 02:50:01
 		LocalDateTime date3 = LocalDateTime.of(2019, Month.JANUARY, 25, 2, 50, 1);
 		
-		//Date 12/01/2019
+		//Date 12-01-2019
 		LocalDate dateFrom = LocalDate.of(2019, Month.JANUARY, 12);
 		
-		//Date 16/01/2019
+		//Date 16-01-2019
 		LocalDate dateTo = LocalDate.of(2019, Month.JANUARY, 16);
 		
 		

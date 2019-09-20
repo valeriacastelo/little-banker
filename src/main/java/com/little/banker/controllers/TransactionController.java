@@ -39,8 +39,8 @@ public class TransactionController {
 	@RequestMapping(value = "/account/{accountId}", method = RequestMethod.GET)
 	public ResponseEntity<Set<Transaction>> find (
 			@PathVariable Integer accountId,
-			@RequestParam(value="dateFrom") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dateFrom,
-			@RequestParam(value="dateTo") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dateTo) {
+			@RequestParam(value="dateFrom") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dateFrom,
+			@RequestParam(value="dateTo") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dateTo) {
 		
 		Account account = accountService.find(accountId);
 		Set<Transaction> list = transactionService.findTransactionsOfAccountByDate(account, dateFrom, dateTo);

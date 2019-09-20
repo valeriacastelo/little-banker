@@ -30,6 +30,7 @@ public class LittleBankerApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		//some initial values
 		LocalDateTime date1 = LocalDateTime.of(2019, Month.SEPTEMBER, 19, 23, 29, 0);
 		LocalDateTime date2 = LocalDateTime.of(2019, Month.SEPTEMBER, 18, 2, 50, 1);
 

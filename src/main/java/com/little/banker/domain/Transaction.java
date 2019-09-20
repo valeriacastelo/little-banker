@@ -14,7 +14,7 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 	private Double amount;
 	private TransactionType type;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private LocalDateTime dateTime;
 	
 	@JsonIgnore
@@ -64,10 +64,10 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 	public int compareTo(Transaction otherTransaction) {
 		int compareToDate = this.dateTime == null? -1 : this.dateTime.compareTo(otherTransaction.getDateTime());
 		if (compareToDate == 0) {
-			compareToDate = this.equals(otherTransaction) ? 0 : 1;
+			compareToDate = this.equals(otherTransaction) ? 0 : -1;
 		}
 		
-		return compareToDate;
+		return compareToDate * (-1);
 	}
 
 	@Override
